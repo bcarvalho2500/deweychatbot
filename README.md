@@ -9,7 +9,7 @@ Senior Design Project. Objective was to create a Natural Language Processor for 
 * Fetching and pushing data to a NoSQL database
 * TensorflowJS
 
-### How to run the project
+## How to run the project
 
 Make sure to add a .env file with the needed variables located below
 
