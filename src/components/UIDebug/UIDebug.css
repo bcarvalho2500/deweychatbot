@@ -1,0 +1,45 @@
+/* 
+  Importing the Lato-Regular Font
+*/
+@font-face {
+    font-family: "Lato-Regular";
+    src: local("Lato-Regular"),
+    url("../../fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: normal;
+  }
+/* 
+  UIDebug background gradient color
+*/
+.bgcolorDebug {
+    background-image: linear-gradient(to right bottom, #e495a2, #dc95b8, #ca99ce, #aca0de, #86a8e7);    padding: 25px;
+    padding: 25px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 
+  Dewey UIDebug POPUP Box message 
+*/
+.align {
+    padding-right: 25px;
+}
+.dewey {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  margin-right: 15px;
+}
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  background-color: rgba(128, 128, 128, 0.25);
+  margin-right: 15px;
+}
+
+.details {
+  font-size: 22px;
+  color: red;
+  text-align: center;
+  font-family: "Lato-Regular";
+}

@@ -1,0 +1,33 @@
+/* 
+  Importing the Lato-Regular Font
+*/
+@font-face {
+    font-family: "Lato-Regular";
+    src: local("Lato-Regular"),
+    url("../../fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: normal;
+  }
+/* 
+  Training data background gradient color
+*/
+.bgcolorTraining {
+    background-image: linear-gradient(to left top, #e495a2, #df94b3, #d496c3, #c39bd2, #aca0de, #98aaeb, #80b4f4, #62bef9, #3eceff, #04ddff, #00eaf8, #35f7eb);
+    padding: 25px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 
+  Box around the training data
+*/
+.boxdata {
+    height: 402px;
+    width:75%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    overflow:auto;
+    justify-content: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

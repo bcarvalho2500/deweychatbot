@@ -1,0 +1,461 @@
+{
+	"swagger": "2.0",
+	"info": {
+	  "version": "1.0.0",
+	  "title": "Dewey Chatbot",
+	  "description": "The api for dewey chatbot",
+	  "license": {
+		"name": "MIT",
+		"url": "https://opensource.org/licenses/MIT"
+	  }
+	},
+	"basePath": "/api",
+	"schemes": ["http"],
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"securityDefinitions": {
+		"bearerAuth": {
+			"name": "Authorization",
+			"in": "header",
+			"type": "apiKey",
+			"description": "JWT Authorization, prefix with 'Bearer'"
+		}
+	},
+	"security": [{
+		"bearerAuth": []
+	}],
+	"paths": {
+		"/message":{
+			"get": {
+				"tags": ["Message"],
+				"summary": "Get all sent messages in the database",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type":"array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"_id": {
+										"type": "integer",
+										"uniqueItems": "true"
+									},
+									"message": {
+										"type": "string"
+									},
+									"isCorrect":{
+										"type":"boolean"
+									},
+									"date": {
+										"type": "string"
+									},
+									"intent": {
+										"type": "string"
+									},
+									"response": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Message"],
+				"description": "Send message to get the intent",
+				"parameters": [
+					{
+						"name": "message",
+						"in": "body",
+						"description": "Message to get intent of",
+						"schema": {
+							"required":["message"],
+							"type":"object",
+							"properties": {
+								"message":{
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Intent determined",
+						"schema": {
+							"$ref": "#/definitions/Message"
+						}
+					}
+				}
+			}
+		},
+		"/message/{id}":{
+			"get": {
+				"tags": ["Message"],
+				"summary": "Get message in database by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"description": "id of message",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Message"
+						}
+					}
+				}
+			}
+		},
+		"/message/rating": {
+			"post": {
+				"tags": ["Message"],
+				"description": "Add user rating to sent message",
+				"parameters": [
+					{
+						"name": "ID and Rating",
+						"in": "body",
+						"description": "ID of message to add rating",
+						"schema": {
+							"required":["id", "isCorrect"],
+							"type":"object",
+							"properties": {
+								"id":{
+									"type": "string"
+								},
+								"isCorrect":{
+									"type":"boolean"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Rating handled",
+						"schema": {
+							"$ref": "#/definitions/Message"
+						}
+					}
+				}
+			}
+		},
+		"/client/message": {
+			"post": {
+				"tags": ["Client"],
+				"summary": "Send message to get the intent but not saved in database",
+				"parameters": [
+					{
+						"name": "message",
+						"in": "body",
+						"description": "Message to get intent of",
+						"schema": {
+							"required":["message"],
+							"type":"object",
+							"properties": {
+								"message":{
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Intent determined",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string"
+								},
+								"date": {
+									"type": "string"
+								},
+								"intent": {
+									"type": "string"
+								},
+								"response": {
+									"type": "string"
+								},
+								"classifications": {
+									"type": "array",
+									"items": {
+										"type":"object",
+										"properties": {
+											"intent":{
+												"type":"string"
+											},
+											"score": {
+												"type":"number"
+											}
+										}
+									}
+								},
+								"score": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/data/training": {
+			"get":{
+				"tags":["Data"],
+				"summary": "Get all the training data",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type":"array",
+							"items":{
+								"type":"object",
+								"properties": {
+									"_id": {
+										"type": "integer",
+										"uniqueItems": "true"
+									},
+									"tag": {
+										"type": "string",
+										"uniqueItems": "true"
+									},
+									"patterns": {
+										"type": "array",
+										"items":{
+											"type":"string"
+										}
+									},
+									"responses": {
+										"type": "array",
+										"items":{
+											"type":"string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/data/training/add": {
+			"post": {
+				"tags": ["Data"],
+				"summary": "Add intents and messages for training",
+				"parameters": [
+					{
+						"name": "Intents and messages",
+						"in": "body",
+						"description": "Array of intents and their messages",
+						"required": "true",
+						"schema":{
+							"type": "array",
+							"items": {
+								"type":"object",
+								"properties": {
+									"tag": {
+										"type": "string"
+									},
+									"patterns": {
+										"type":"array",
+										"items": {
+											"type":"string"
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/data/training/delete": {
+			"post": {
+				"tags": ["Data"],
+				"summary": "Delete patterns from training data",
+				"parameters": [
+					{
+						"name": "Intent and message",
+						"in": "body",
+						"description": "Pattern and the intent you want to delete it from",
+						"required": "true",
+						"schema":{
+							"type": "object",
+							"properties": {
+								"intent": {
+									"type": "string"
+								},
+								"pattern": {
+									"type":"string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/trainModel":{
+			"get":{
+				"tags":["Model"],
+				"summary": "Sends request for model to be trained",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/intent/all": {
+			"get":{
+				"tags":["Intent"],
+				"summary":"Returns all trained intents",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type":"string"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/unprocessed": {
+			"get":{
+				"tags":["Message"],
+				"summary": "Get all messages that did not receive an intent",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type":"object",
+								"properties":{
+									"_id": {
+										"type": "integer",
+										"uniqueItems": "true"
+									},
+									"message": {
+										"type": "string"
+									},
+									"date": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Message": {
+			"properties": {
+				"_id": {
+					"type": "integer",
+					"uniqueItems": "true"
+				},
+				"message": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string"
+				},
+				"isCorrect":{
+					"type": "boolean"
+				},
+				"intent": {
+					"type": "string"
+				},
+				"response": {
+					"type": "string"
+				}
+			}
+		},
+		"TrainingData": {
+			"properties": {
+				"_id": {
+					"type": "integer",
+					"uniqueItems": "true"
+				},
+				"tag": {
+					"type": "string",
+					"uniqueItems": "true"
+				},
+				"patterns": {
+					"type": "array",
+					"items":{
+						"type":"string"
+					}
+				},
+				"responses": {
+					"type": "array",
+					"items":{
+						"type":"string"
+					}
+				}
+			}
+		},
+		"UnprocessedMessage": {
+			"properties":{
+				"_id": {
+					"type": "integer",
+					"uniqueItems": "true"
+				},
+				"message": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string"
+				}
+			}
+		}
+	}
+  }

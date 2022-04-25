@@ -1,0 +1,34 @@
+/* 
+  Importing the Lato-Regular Font
+*/
+@font-face {
+    font-family: "Lato-Regular";
+    src: local("Lato-Regular"),
+    url("../../fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: normal;
+  }
+/* 
+  Homepage background gradient color
+*/
+.bgcolorHomepage {
+    background-image: linear-gradient(to right bottom, #e495a2, #df94b3, #d496c3, #c39bd2, #aca0de, #98aaeb, #80b4f4, #62bef9, #3eceff, #04ddff, #00eaf8, #35f7eb);
+    padding: 25px;
+    width: 100%;
+    height: 100%;
+}
+/* 
+  Padding homepage introduction text
+*/
+.align {
+    padding-right: 25px;
+}
+
+/* 
+  Padding and Margining the about section
+*/
+#about{
+    font-family: "Lato-Regular";
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}

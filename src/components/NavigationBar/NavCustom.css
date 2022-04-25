@@ -1,0 +1,35 @@
+
+/* 
+  Importing the Lato-Regular Font
+*/
+@font-face {
+    font-family: "Lato-Regular";
+    src: local("Lato-Regular"),
+    url("../../fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: normal;
+  }
+
+/* 
+  Nav Bar background color and its font
+*/
+.color-nav {
+    background: #ffffff;
+    box-shadow: 0px 0.1px 5px 0px rgba(0, 0, 0, 0.5);
+    font-family: "Lato-Regular";
+    
+}
+/* 
+  Profile dropdown and it's components centered
+*/
+#profile {
+    text-align: center;
+}
+
+#dropdown-menu {
+    text-align: center;
+}
+#login {
+    text-align: center;
+    margin-right: 45px;
+    margin-left: 45px;
+}
